@@ -20,7 +20,7 @@ public class StudentController {
 	@Autowired
 	private StudentService service;
 
-	//postmapping 
+	//postmapping1
 	@PostMapping("/save")
 	public StudentDetails savename(@RequestBody StudentDetails details) {
 		return service.save(details);
