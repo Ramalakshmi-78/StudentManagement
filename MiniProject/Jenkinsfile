@@ -1,0 +1,65 @@
+pipeline {
+    agent any
+
+tools {
+        jdk 'JDK17'
+    }
+    stages {
+
+        stage('git clone') {
+            steps {
+                 git branch: 'main', credentialsId: 'Student', url: 'https://github.com/Ramalakshmi-78/StudentManagement.git'
+            }
+        }
+        
+        stage('list comment') {
+            steps {
+                bat 'dir MiniProject'
+            }
+        }
+       stage('Check Java') {
+    steps {
+        bat 'java -version'
+    }
+}
+
+stage('Check Maven') {
+    steps {
+        dir('MiniProject') {
+            bat 'mvnw.cmd -version'
+        }
+    }
+}
+stage('Build') {
+            steps {
+                dir('MiniProject') {
+                    bat 'mvnw.cmd clean compile'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                dir('MiniProject') {
+                    bat 'mvnw.cmd test'
+                }
+            }
+        }
+
+        stage('Package') {
+            steps {
+                dir('MiniProject') {
+                    bat 'mvnw.cmd clean package'
+                }
+            }
+        }
+
+       stage('Deploy') {
+    steps {
+        dir('MiniProject') {
+            bat 'java -jar target\\MiniProject-0.0.1-SNAPSHOT.jar'
+        }
+    }
+}
+}
+    }
