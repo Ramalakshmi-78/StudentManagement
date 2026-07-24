@@ -54,12 +54,22 @@ stage('Build') {
             }
         }
 
-       stage('Deploy') {
-    steps {
-        dir('MiniProject') {
-            bat 'java -jar target\\MiniProject-0.0.1-SNAPSHOT.jar'
+     stage('Docker Build') {
+            steps {
+                dir('MiniProject') {
+                    bat 'docker build -t student-app .'
+                }
+            }
         }
-    }
-}
+
+        stage('Deploy') {
+            steps {
+               bat '''
+                 docker stop student-container
+                 docker rm student-container
+                 exit /b 0
+                 '''
+            }
+        }
 }
     }
