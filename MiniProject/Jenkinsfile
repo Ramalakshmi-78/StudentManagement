@@ -62,10 +62,11 @@ stage('Build') {
             }
         }
 
-      stage('Deploy') {
+     stage('Deploy') {
     steps {
         bat '''
-        docker rm -f student-container 2>nul
+        docker stop student-container 2>nul
+        docker rm student-container 2>nul
         docker run -d -p 8081:8080 --name student-container student-app
         '''
     }
