@@ -16,7 +16,7 @@ public class StudentService {
 	return repo.save(details);
 	}
 	
-	public StudentDetails get(int id) {
+	public StudentDetails get(Long id) {
 	//return repo.findById(id).map(StudentDetails::getName).orElse("Student not found");
 		return repo.findById(id).orElseThrow(()-> new RuntimeException("student not exist"));	
 	}
@@ -25,7 +25,7 @@ public class StudentService {
 		return repo.findAll();	
 	}
 	
-	public void deleteStudent(int id) {
+	public void deleteStudent(Long id) {
 		if (repo.existsById(id)) {
 	        repo.deleteById(id);
 	    } else {
@@ -33,7 +33,7 @@ public class StudentService {
 	    }
 	}
 	
-	public StudentDetails update(int id,StudentDetails details) {
+	public StudentDetails update(Long id,StudentDetails details) {
 		 StudentDetails stu =repo.findById(id).get();
 		 
 		 stu.setName(details.getName());
